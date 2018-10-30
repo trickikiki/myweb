@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <sel></sel>
+    <el-container>
+      <el-aside>
+      </el-aside>
+      <el-main>
+        <sel></sel>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
