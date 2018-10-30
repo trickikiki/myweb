@@ -1,9 +1,11 @@
 # studsys
+***
+>每次git上去之前记得先pull一下 防止冲掉队友的修改。
+>前端测试数据接口需要在studsys目录下node app打开后端服务。
+>之后我会开一个版块写后端提供的接口路由和需要传入的参数。
 
-> A Vue.js project
 
-## Build Setup
-
+***
 ``` bash
 # install dependencies
 npm install

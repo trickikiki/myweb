@@ -1,5 +1,4 @@
 var SQL={
-  insert:'insert into test(id,name) values(?,?)',
-  select:'select * from mail_list'
+  show_employees:'select * from employees limit ?,?',
 };
 module.exports = SQL;

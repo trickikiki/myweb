@@ -8,9 +8,9 @@ var pool = mysql.createPool(dbconfig)
 
 router.get('/check',function (req,res,next) {
   pool.getConnection(function(err,connection){
-    connection.query('select * from mail_list',function(err,result){
+    connection.query(sql.show_employees,[0,5],function(err,result){
       if(err)throw err;
-      else console.log(result[0].name);
+      else console.log(result);
     })
     connection.release();
   })
