@@ -2,10 +2,9 @@
   <div id="app">
     <el-container>
       <el-aside>
-        <button @click='fun()'>post</button>
+        <conbutton></conbutton>
       </el-aside>
       <el-main>
-
       </el-main>
     </el-container>
   </div>
@@ -13,27 +12,17 @@
 
 <script>
   import sel from './components/select';
+  import conbutton from './components/conbutton'
 export default {
   name: 'App',
-  components:{sel},
+  components:{sel,conbutton},
   data(){
     return {
 
     }
   },
   methods:{
-    fun(){
-      alert('click');
-      this.axios.post('/addtable',{
-        tablename:'names',
-        rows:['first','last'],
-        rowtype:['varchar(30)','varchar(30)']
-      }).then(function (res) {
-        alert(res.data);
-      }).catch(function (err) {
-        alert(err);
-      })
-    }
+
   }
 }
 </script>

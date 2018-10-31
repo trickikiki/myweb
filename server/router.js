@@ -29,5 +29,19 @@ router.post('/addtable',function (req,res,next) {
     connection.release();
   })
 });//建表传入表名，列名数组，数据类型数组{tablename:string,rows:[string],rowtype:[string]}
-
+router.post('/droptable',function (req,res) {
+  let sql='drop table ';
+  sql+=req.body.tablename;
+  pool.getConnection(function (err,connection) {
+    connection.query(sql,function (err,result) {
+      if(err){
+        console.log(err);
+        res.send('删表失败');
+      }else{
+        console.log(result);
+        res.send('删表成功');
+      }
+    })
+  })
+})
 module.exports = router;
