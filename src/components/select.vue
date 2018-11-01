@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div style="margin-bottom: 20px;">
+
+    <el-tabs v-model="editableTabsValue2" type="border-card" @tab-remove="removeTab" :stretch=stretch>
+      <el-tab-pane v-for='(item,index) in editableTabs2' :key=index :label=item.title :name=item.name>
+        <checktable></checktable>
+        <pagination></pagination>
+      </el-tab-pane>
+    </el-tabs>
+    <div style="margin-top: 20px;">
       <el-button
         size="small"
         @click=addTab(editableTabsValue2)
@@ -8,13 +15,6 @@
         add tab
       </el-button>
     </div>
-    <el-tabs v-model="editableTabsValue2" type="card" closable @tab-remove="removeTab" stretch="true">
-      <el-tab-pane v-for='(item,index) in editableTabs2' :key=index :label=item.title :name=item.name>
-        <checktable></checktable>
-        <pagination></pagination>
-      </el-tab-pane>
-    </el-tabs>
-
   </div>
 </template>
 
@@ -26,7 +26,8 @@
       name: "sel",
       data() {
         return {
-          editableTabsValue2: '6',
+          stretch:true,
+          editableTabsValue2: 'employees',
           editableTabs2: [{
             title: 'employees',
             name: 'employees',

@@ -1,6 +1,6 @@
 <template>
-  <el-table :data="tableData" border fit="true">
-    <el-table-column v-for="(col,index) in cols" :prop="col.prop" :label="col.label" :key="index"></el-table-column>
+  <el-table :data="tableData" border :fit=ft>
+    <el-table-column v-for="(col,index) in cols" :prop=col.prop :label=col.label :key=index></el-table-column>
   </el-table>
 </template>
 
@@ -9,6 +9,7 @@
       name: "checktable",
       data() {
         return {
+          ft:true,
           cols:[
             {
             prop:'emp_no',
