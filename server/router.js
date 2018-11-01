@@ -17,6 +17,7 @@ router.post('/addtable',function (req,res,next) {
       }
       sql=sql+req.body.rows[i]+' '+req.body.rowtype[i]+sql3;
   pool.getConnection(function(err,connection){
+    if(err)return;
     connection.query(sql,function(err,result){
       if(err){
         console.log(err);
@@ -30,10 +31,9 @@ router.post('/addtable',function (req,res,next) {
   })
 });//建表传入表名，列名数组，数据类型数组{tablename:string,rows:[string],rowtype:[string]}
 router.post('/droptable',function (req,res) {
-  let sql='drop table ';
-  sql+=req.body.tablename;
   pool.getConnection(function (err,connection) {
-    connection.query(sql,function (err,result) {
+    if(err)return;
+    connection.query('drop table ??',[req.body.tablename],function (err,result) {
       if(err){
         console.log(err);
         res.send('删表失败');
@@ -42,6 +42,54 @@ router.post('/droptable',function (req,res) {
         res.send('删表成功');
       }
     })
+    connection.release();
   })
-})
+})//删表传入表名{tablename:string}
+router.post('/showtable',function (req,res) {
+  let tablearr=[];
+  pool.getConnection(function (err,connection) {
+    if(err)return;
+    connection.query('show tables',function (err,result) {
+      if(err){
+        res.send("无法获取表名信息");
+        console.log(err)
+      }else{
+        for(let i of result){
+          tablearr.push(i.Tables_in_employees);
+        }
+        res.send(tablearr);
+      }
+    })
+    connection.release();
+  })
+})//获取表名
+router.post('/getcols',function (req,res) {
+  let colsarr=[];
+  pool.getConnection(function (err,connection) {
+    if(err)return;
+    connection.query('desc ??',[req.body.tablename],function (err,result) {
+      if(err)return
+      for(let i of result){
+        colsarr.push(i.Field);
+      }
+      res.send(colsarr);
+    })
+    connection.release();
+  })
+})//输入表名返回列名字符串数组{tablename:string}
+router.post('/selectall',function (req,res) {
+  let dataarr=[];
+  pool.getConnection(function (err,connection) {
+    if(err)return;
+    connection.query('select * from ?? limit ?,?',[req.body.tablename,req.body.position,req.body.offset],function (err,result) {
+      if(err)return;
+      for(let i of result){
+        dataarr.push(i);
+      }
+      res.send(dataarr);
+    })
+    connection.release();
+  })
+})//输入表名和起始select位置以及select个数返回对象数组{tablename:string,position:num,offset:num}
+
 module.exports = router;

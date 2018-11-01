@@ -12,10 +12,13 @@
       },
       methods:{
         fun(){
-          this.axios.post('/droptable',{
-            tablename:'names'
+          this.axios.post('/selectall',{
+            tablename:'employees',
+            position:30,
+            offset:3
           }).then(function (res) {
-            alert(res.data);
+            alert(res.data[0].birth_date);
+            console.log(res.data);
           }).catch(function (err) {
             alert(err);
           })

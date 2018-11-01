@@ -5,9 +5,12 @@
 >之后我会开一个版块写后端提供的接口路由和需要传入的参数。
 >conbutton是我测试接口的按钮
 ***
-- /addtable   :  新建一个表，传入表名，列名，列数据类型，返回成功。 {tablename:string,rows:[string],rowtype:[string]}
--/droptable   :  删除表，传入表名，返回成功   {tablename:string}
-
+- /addtable   :  新建一个表，传入表名，列名，列数据类型，返回成功。 post参数：{tablename:string,rows:[string],rowtype:[string]}
+- /droptable  :  删除表，传入表名，返回成功   post参数：{tablename:string}
+- /showtable  :  获取employees数据库中的所有表名  不需要传数据到后端  返回表名字符串数组   post参数：{}
+- /getcols    :  传入表名，返回列名字符串数组 post参数：{tablename:string}
+- /selectall  :  传入表名，select起始位置，select个数，返回对象数组</br>
+（数据太多，需要做分页，确定每页展示个数后可以修改后端路由）post参数：{tablename:string,position:num,offset:num}
 
 
 
