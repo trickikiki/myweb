@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-menu class="el-menu-vertical-demo" :default-active=active :router=rt>
-        <el-menu-item index="/table">
+        <el-menu-item index="/">
           <template>
             <i class="el-icon-menu"></i>
             <span slot="title">所有信息</span>
@@ -28,9 +28,12 @@
         name: "mymenu",
       data(){
           return {
-            active:'/table',
+            active:'/',
             rt:true
           }
+      },
+      methods:{
+
       }
     }
 </script>

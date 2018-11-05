@@ -1,71 +1,34 @@
 <template>
   <div>
-
     <el-tabs v-model="editableTabsValue2" type="border-card" @tab-remove="removeTab" :stretch=stretch>
-      <el-tab-pane v-for='(item,index) in editableTabs2' :key=index :label=item.title :name=item.name>
-        <checktable></checktable>
-        <pagination></pagination>
+      <el-tab-pane v-for='(item,index) in editableTabs2' :key=index :label=item :name=item>
+        <checktable :tn="editableTabsValue2"></checktable>
       </el-tab-pane>
     </el-tabs>
-    <div style="margin-top: 20px;">
-      <el-button
-        size="small"
-        @click=addTab(editableTabsValue2)
-      >
-        add tab
-      </el-button>
-    </div>
   </div>
 </template>
 
 <script>
   import checktable from './checktable';
-  import pagination from './Pagination';
     export default {
-      components:{checktable,pagination},
+      components:{checktable},
       name: "sel",
       data() {
         return {
           stretch:true,
-          editableTabsValue2: 'employees',
-          editableTabs2: [{
-            title: 'employees',
-            name: 'employees',
-            content: '插入表格'
-          }, {
-            title: 'departments',
-            name: 'departments',
-            content: '插入表格'
-          },{
-            title: 'dept_emp',
-            name: 'dept_emp',
-            content: '插入表格'
-          },{
-            title: 'dept_manager',
-            name: 'dept_manager',
-            content: '插入表格'
-          },{
-            title: 'salaries',
-            name: 'salaries',
-            content: '插入表格'
-          },{
-            title: 'titles',
-            name: 'titles',
-            content: '插入表格'
-          }],
-          tabIndex: 6
+          editableTabsValue2: 'current_dept_emp',
+          editableTabs2: [],
+          tabIndex: 1
         }
       },
+      created:function () {
+        this.axios.post('/showtable',{}).then((res)=>{
+          this.editableTabs2=res.data;
+        }).catch((err)=>{
+          console.log(err);
+        })
+      },
       methods: {
-        addTab(targetName) {
-          let newTabName = ++this.tabIndex + '';
-          this.editableTabs2.push({
-            title: 'New Tab',//新表名
-            name: newTabName,//标号 可与表名相同
-            content: 'New Tab content'
-          });
-          this.editableTabsValue2 = newTabName;
-        },
         removeTab(targetName) {
           let tabs = this.editableTabs2;
           let activeName = this.editableTabsValue2;

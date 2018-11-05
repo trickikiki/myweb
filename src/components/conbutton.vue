@@ -1,5 +1,8 @@
 <template>
-  <button @click='fun()'>post</button>
+  <div>
+    <button @click='fun()'>post</button>
+    <button @click="show">show</button>
+  </div>
 </template>
 
 <script>
@@ -7,21 +10,21 @@
       name: "conbutton",
       data(){
         return{
-
+          arrdata:[]
         }
       },
       methods:{
         fun(){
-          this.axios.post('/selectall',{
-            tablename:'employees',
-            position:30,
-            offset:3
-          }).then(function (res) {
-            alert(res.data[0].birth_date);
-            console.log(res.data);
-          }).catch(function (err) {
-            alert(err);
+          this.axios.post('/showtable',{
+
+          }).then((res)=>{
+            this.arrdata=res.data;
+          }).catch((err)=>{
+            console.log(err);
           })
+        },
+        show(){
+          alert(this.arrdata);
         }
       }
     }

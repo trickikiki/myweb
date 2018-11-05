@@ -1,35 +1,114 @@
 # studsys
-***
->每次git上去之前记得先pull一下 防止冲掉队友的修改。
->前端测试数据接口需要在studsys目录下node app打开后端服务。
->之后我会开一个版块写后端提供的接口路由和需要传入的参数。
->conbutton是我测试接口的按钮
-***
-- /addtable   :  新建一个表，传入表名，列名，列数据类型，返回成功。 post参数：{tablename:string,rows:[string],rowtype:[string]}
-- /droptable  :  删除表，传入表名，返回成功   post参数：{tablename:string}
-- /showtable  :  获取employees数据库中的所有表名  不需要传数据到后端  返回表名字符串数组   post参数：{}
-- /getcols    :  传入表名，返回列名字符串数组 post参数：{tablename:string}
-- /selectall  :  传入表名，select起始位置，select个数，返回对象数组</br>
-（数据太多，需要做分页，确定每页展示个数后可以修改后端路由）post参数：{tablename:string,position:num,offset:num}
 
-
-
-
-
-***
-***
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+##1.新建一个表
+-API地址：/addtable
+-请求方式post
+-必要参数：tablename="新建的表名" rows=["字段名数组"] rowtype=["字段对应的数据类型数组"]
+-请求返回值：
+*请求成功:
+>{
+>   "status":200,
+>   "data":'建表成功'
+>}
+*请求失败:
+>{
+>   "status":503,
+>   "data":'建表失败'
+>{
+##2.删除一个表
+-API地址：/droptable
+-请求方式post
+-必要参数：tablename="要删除的表名"
+-请求返回值：
+*请求成功:
+>{
+>   "status":200,
+>   "data":'删表成功'
+>}
+*请求失败:
+>{
+>   "status":503,
+>   "data":'删表失败'
+>{
+##3获取数据库中所有表名
+-API地址：/showtable
+-请求方式post
+-必要参数：无 (发送｛｝即可)
+-请求返回值：
+*请求成功:
+>{
+>   "status":200,
+>   "data":['employees','departments','titles','salaries','dept_manager','dept_emp']
+>}
+*请求失败:
+>{
+>   "status":503,
+>   "data":'获取表名失败'
+>{
+##4返回字段名
+-API地址：/getcols
+-请求方式post
+-必要参数：tablename="需要查询的表名"
+-请求返回值：
+*请求成功:
+>{
+>   "status":200,
+>   "data":['emp_no','birth_date','first_name','last_name','gender','hire_date']
+>}
+*请求失败:
+>{
+>   "status":503,
+>   "data":'无法获取字段名'
+>{
+##5获取指定表中所有数据（基于分页）
+-API地址：/selectall
+-请求方式post
+-必要参数：tablename:表名,position:查询数据的起始编号,offset:返回查询数据的数量
+-请求返回值：
+*请求成功:
+>{
+>   "status":200,
+>   "data":{
+>             'emp_no':10001,
+>             'birth_date':1953-09-01T16:00:00.000Z,
+>             'first_name':'Georgi',
+>             'last_name':Facello,
+>             'gender':'M',
+>             'hire_date':1986-06-25T16:00:00.000Z
+>           }
+>}
+*请求失败:
+>{
+>   "status":503,
+>   "data":'无法获取数据'
+>{
+##6获取表中数据总数数量
+-API地址：/getcount
+-请求方式post
+-必要参数：tablename:表名
+-请求返回值：
+*请求成功:
+>{
+>   "status":200,
+>   "data":'300024'
+>}
+*请求失败:
+>{
+>   "status":503,
+>   "data":'无法获取数据'
+>{
+##6获取表中数据总数数量
+-API地址：/getcount
+-请求方式post
+-必要参数：tablename:表名
+-请求返回值：
+*请求成功:
+>{
+>   "status":200,
+>   "data":'300024'
+>}
+*请求失败:
+>{
+>   "status":503,
+>   "data":'无法获取数据'
+>{

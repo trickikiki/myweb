@@ -1,57 +1,97 @@
 <template>
-  <el-table :data="tableData" border :fit=ft>
-    <el-table-column v-for="(col,index) in cols" :prop=col.prop :label=col.label :key=index></el-table-column>
-  </el-table>
+  <div>
+    <el-table :data="tableData" border :fit=ft>
+      <el-table-column v-for="(col,index) in cols" :prop=col :label=col :key=index></el-table-column>
+    </el-table>
+    <el-pagination
+      :total=total
+      background
+      @current-change="handleCurrentChange"
+      @prev-click="handleCurrentChange"
+      @next-click="handleCurrentChange"
+      :page-size=pageSize
+    >
+    </el-pagination>
+  </div>
 </template>
 
 <script>
     export default {
       name: "checktable",
+      props:['tn'],
       data() {
         return {
           ft:true,
-          cols:[
-            {
-            prop:'emp_no',
-            label:'emp_no'
-          },{
-            prop:'birth_date',
-            label:'birth_date'
-          },{
-            prop:'first_name',
-            label:'first_name'
-          },{
-            prop:'last_name',
-            label:'last_name'
-          },{
-            prop:'gender',
-            label:'gender'
-          },{
-            prop:'hire_date',
-            label:'hire_date'
-          }
-          ],
-          tableData: [
-            {
-            emp_no:1,
-            birth_date:1,
-            first_name:1,
-            last_name:1,
-            gender:1,
-            hire_date:1
-          },{
-            emp_no:2,
-            birth_date:2,
-            first_name:2,
-            last_name:2,
-            gender:2,
-            hire_date:2
-          }
-          ]
+          cols:[],
+          tableData: [],
+          page:0,
+          total:30000,
+          pageSize:5
+        }
+      },
+      // mounted:function () {
+      //   this.axios.post('/getcols',{
+      //     tablename:this.tn
+      //   }).then((res)=>{
+      //     this.cols=res.data;
+      //   }).catch((err)=>{
+      //     console.log(err);
+      //   })
+      //   this.axios.post('/selectall',{
+      //     tablename:this.tn,
+      //     position:0,
+      //     offset:5
+      //   }).then((res)=>{
+      //     this.tableData=res.data;
+      //   }).catch((err)=>{
+      //     console.log(err);
+      //   })
+      //   this.getcount()
+      // },
+      watch:{
+        tn:function () {
+          this.axios.post('/getcols',{
+            tablename:this.tn
+          }).then((res)=>{
+            this.cols=res.data;
+          }).catch((err)=>{
+            console.log(err);
+          })
+          this.axios.post('/selectall',{
+            tablename:this.tn,
+            position:0,
+            offset:5
+          }).then((res)=>{
+            this.tableData=res.data;
+          }).catch((err)=>{
+            console.log(err);
+          })
+          this.getcount()
         }
       },
       methods:{
-
+        handleCurrentChange(val){
+          this.axios.post('/selectall',{
+            tablename:this.tn,
+            position:(val-1)*5,
+            offset:5
+          }).then((res)=>{
+            this.tableData=res.data;
+            console.log('a');
+          }).catch((err)=>{
+            console.log(err);
+          })
+        },
+        getcount(){
+          this.axios.post('/getcount',{
+            tablename:this.tn
+          }).then((res)=>{
+            this.total=parseInt(res.data);
+            console.log(res.data);
+          }).catch((err)=>{
+            console.log(err);
+          })
+        }
       }
 
     }
