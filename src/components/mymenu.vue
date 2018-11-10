@@ -1,6 +1,6 @@
 <template>
     <div>
-      <el-menu class="el-menu-vertical-demo" :default-active=active :router=rt>
+      <el-menu class="el-menu-vertical-demo" :default-active=active :router=rt style="height: 730px;">
         <el-menu-item index="/">
           <template>
             <i class="el-icon-menu"></i>
@@ -10,7 +10,7 @@
         <el-menu-item index="/find">
           <template>
             <i class="el-icon-menu"></i>
-            <span slot="title">按条件查询</span>
+            <span slot="title">查询员工信息</span>
           </template>
         </el-menu-item>
         <el-menu-item index="/operate">

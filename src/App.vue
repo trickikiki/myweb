@@ -15,17 +15,10 @@
   import sel from './components/select';
   import conbutton from './components/conbutton'
   import mymenu from './components/mymenu'
+  import find from './components/find'
 export default {
   name: 'App',
-  components:{sel,conbutton,mymenu},
-  data(){
-    return {
-
-    }
-  },
-  methods:{
-
-  }
+  components:{sel,conbutton,mymenu,find}
 }
 </script>
 

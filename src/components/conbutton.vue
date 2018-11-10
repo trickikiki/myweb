@@ -10,15 +10,17 @@
       name: "conbutton",
       data(){
         return{
-          arrdata:[]
+
         }
       },
       methods:{
         fun(){
-          this.axios.post('/showtable',{
-
+          this.axios.post('/checkempno',{
+            emp_no:10100,
+            position:0,
+            offset:5
           }).then((res)=>{
-            this.arrdata=res.data;
+            console.log(res.data)
           }).catch((err)=>{
             console.log(err);
           })

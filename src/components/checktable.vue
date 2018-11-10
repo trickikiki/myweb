@@ -25,8 +25,8 @@
           cols:[],
           tableData: [],
           page:0,
-          total:30000,
-          pageSize:5
+          total:0,
+          pageSize:10
         }
       },
       // mounted:function () {
@@ -60,7 +60,7 @@
           this.axios.post('/selectall',{
             tablename:this.tn,
             position:0,
-            offset:5
+            offset:this.pageSize
           }).then((res)=>{
             this.tableData=res.data;
           }).catch((err)=>{
@@ -73,8 +73,8 @@
         handleCurrentChange(val){
           this.axios.post('/selectall',{
             tablename:this.tn,
-            position:(val-1)*5,
-            offset:5
+            position:(val-1)*this.pageSize,
+            offset:this.pageSize
           }).then((res)=>{
             this.tableData=res.data;
             console.log('a');

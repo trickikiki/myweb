@@ -151,4 +151,148 @@ router.post('/getcount',function (req,res) {
     connection.release();
   })
 })
+router.post('/insert',function (req,res) {
+  let sql='insert into '
+  sql=sql+req.body.tablename+'('
+  let i=0;
+  for(i;i<req.body.colname.length-1;i++)
+  {
+    sql=sql+req.body.colname[i]+','
+  }
+  sql=sql+req.body.colname[i]+') values ('
+  i=0;
+  for(i;i<req.body.coldata.length-1;i++)
+  {
+    sql=sql+req.body.coldata[i]+','
+  }
+  sql=sql+req.body.coldata[i]+')'
+  pool.getConnection(function (err,connection) {
+    if(err)
+    {
+      res.status(503);
+      res.send('插入失败');
+      return
+    }
+    connection.beginTransaction(function (err) {
+      if(err)
+      {
+        res.status(503);
+        res.send('插入失败');
+        return
+      }
+      connection.query(sql,function (err,result) {
+        if(err)
+        {
+          return connection.rollback(function () {
+            console.log(err)
+            res.send('插入失败')
+          })
+        }
+        connection.commit(function (err) {
+          if(err)
+          {
+            return connection.rollback(function () {
+              res.send("过程出错已撤销操作")
+            })
+          }
+          else
+          {
+            res.send('插入成功')
+          }
+        })
+      })
+    })
+    connection.release()
+  })
+})//tablename colname[] coldata[]
+router.post('/delete',function (req,res) {
+  pool.getConnection(function (err,connection) {
+    if(err)
+    {
+      res.send('无法连接数据库')
+      return
+    }
+    connection.beginTransaction(function (err) {
+      if(err)
+      {
+        res.send('操作失败')
+        return;
+      }
+      connection.query('delete from '+req.body.tablename+' where emp_no='+req.body.emp_no,function (err,result) {
+        if(err)
+        {
+          res.send('无法删除')
+          return connection.rollback(function () {
+            console.log(err)
+          })
+        }
+        connection.commit(function (err) {
+          if(err)
+          {
+            return connection.rollback(function () {
+              res.send("过程出错已撤销操作")
+            })
+          }
+          else
+          {
+            res.send('删除成功')
+          }
+        })
+      })
+    })
+    connection.release()
+  })
+})//tablename emp_no
+router.post('/checkempno',function (req,res) {
+  let checkresult={
+    table:[],
+    num:0
+  }
+  let sql='select c.first_name,c.last_name,b.title,a.salary,a.from_date,a.to_date \n' +
+    'from salaries a,titles b,employees c \n' +
+    'where a.emp_no=b.emp_no \n' +
+    'and c.emp_no=a.emp_no\n' +
+    'and a.from_date>=b.from_date \n' +
+    'and a.to_date<=b.to_date\n' +
+    'and a.emp_no=?\n' +
+    'order by a.from_date '
+  pool.getConnection(function(err,connection){
+    if(err)
+    {
+      res.send('连接数据库失败')
+      return
+    }
+    connection.beginTransaction(function (err) {
+      if(err){console.log(err)}
+      connection.query(sql+'limit ?,?',[req.body.emp_no,req.body.position,req.body.offset],function (err,result) {
+        if(err)
+        {
+          return connection.rollback(function () {
+            console.log(err)
+          })
+        }
+        checkresult.table=result
+
+        connection.query('select count(*) as num from ('+sql+') a',[req.body.emp_no],function (err,result) {
+          if(err)
+          {
+            return connection.rollback(function () {
+              console.log(err)
+            })
+          }
+          checkresult.num=result[0].num
+          connection.commit(function (err) {
+            if(err){
+              return connection.rollback(function () {
+                console.log(err)
+              })
+            }
+            res.send(checkresult)
+          })
+        })
+      })
+    })
+    connection.release()
+  })
+})//emp_no position offset
 module.exports = router;
