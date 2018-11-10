@@ -139,3 +139,70 @@
 >   "status":503,<br>
 >   "data":'无法获取数据'<br>
 >{<br>
+
+## 7向指定表中插入数据<br>
+- API地址：/insert<br>
+- 请求方式post<br>
+- 必要参数：tablename:表名 colname:字段名数组 coldata:要插入的数据数组<br>
+- 请求返回值：<br>
+* 请求成功:<br>
+
+>{<br>
+>   "status":200,<br>
+>   "data":'插入成功'<br>
+>}<br>
+
+* 请求失败:<br>
+
+>{<br>
+>   "status":503,<br>
+>   "data":'插入失败'<br>
+>{<br>
+
+## 8删除指定表中指定员工编号的数据<br>
+- API地址：/delete<br>
+- 请求方式post<br>
+- 必要参数：tablename:表名 emp_no:员工编号<br>
+- 请求返回值：<br>
+* 请求成功:<br>
+
+>{<br>
+>   "status":200,<br>
+>   "data":'删除成功'<br>
+>}<br>
+
+* 请求失败:<br>
+
+>{<br>
+>   "status":503,<br>
+>   "data":'无法删除'<br>
+>{<br>
+
+## 9查询指定员工信息<br>
+- API地址：/checkempno<br>
+- 请求方式post<br>
+- 必要参数：emp_no:员工编号 position:分页开始位置 offset:每页数据数量<br>
+- 请求返回值：<br>
+* 请求成功:<br>
+
+>{<br>
+>   "status":200,<br>
+>   "data":{<br>
+>            table:[{<br>
+>             'first_name':'xxx',<br>
+>              'last_name':'xxx',<br>
+>              'title':'xxx',<br>
+>              'salary':'xxx',<br>
+>              'from_date': date,<br>
+>              'to_date':date<br>
+>            }],<br>
+>             num:14<br>
+>           }<br>
+>}<br>
+
+* 请求失败:<br>
+
+>{<br>
+>   "status":503,<br>
+>   "data":'无法删除'<br>
+>{<br>
