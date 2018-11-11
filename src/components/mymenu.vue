@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-menu class="el-menu-vertical-demo" :default-active=active :router=rt style="height: 730px;">
-        <el-menu-item index="/">
+        <el-menu-item index="/showall">
           <template>
             <i class="el-icon-menu"></i>
             <span slot="title">所有信息</span>
@@ -17,6 +17,12 @@
           <template>
             <i class="el-icon-menu"></i>
             <span slot="title">表操作</span>
+          </template>
+        </el-menu-item>
+        <el-menu-item index="/data">
+          <template>
+            <i class="el-icon-menu"></i>
+            <span slot="title">数据操作</span>
           </template>
         </el-menu-item>
       </el-menu>

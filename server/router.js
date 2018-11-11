@@ -295,4 +295,55 @@ router.post('/checkempno',function (req,res) {
     connection.release()
   })
 })//emp_no position offset
+router.post('/salary',function (req,res) {
+  pool.getConnection(function (err,connection) {
+    if(err)
+    {
+      throw err;
+      return;
+    }
+    connection.beginTransaction(function (err) {
+      if(err){
+        throw err;
+        return;
+      }
+      connection.query('select from_date from salaries where emp_no=? and to_date=?',[req.body.emp_no,'9999-01-01'],function (err,result) {
+        if(err)
+        {
+          return connection.rollback(function () {
+            console.log(err)
+          })
+        }
+        var todate=(result[0].from_date.getFullYear()+1)+'-'+result[0].from_date.getMonth()+'-'+result[0].from_date.getDate();
+        connection.query('update salaries set to_date=? where to_date=? and emp_no=?',[todate,'9999-01-01',req.body.emp_no],function (err,result) {
+          if(err)
+          {
+            return connection.rollback(function () {
+              console.log(err)
+            })
+          }
+          connection.query('insert into salaries (emp_no,salary,from_date,to_date) values (?,?,?,?)',[req.body.emp_no,req.body.salary,todate,'9999-01-01'],function (err,result) {
+            if(err)
+            {
+              return connection.rollback(function () {
+                console.log(err)
+              })
+            }
+            connection.commit(function (err) {
+              if(err)
+              {
+                return connection.rollback(function () {
+                  console.log(err)
+                })
+              }else{
+                res.send('工资更新完毕')
+              }
+            })
+          })
+        })
+      })
+    })
+    connection.release();
+  })
+})
 module.exports = router;

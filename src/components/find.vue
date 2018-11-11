@@ -37,7 +37,7 @@
             tableData:[],
             ft:true,
             pageSize:10,
-            total:0
+            total:0,
           }
       },
       methods:{

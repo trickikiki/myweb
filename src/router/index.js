@@ -4,11 +4,12 @@ import app from '../App'
 import select from '../components/select'
 import find from '../components/find'
 import operatable from '../components/operatable'
+import deldata from '../components/deldata'
 Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path:'/asasas',
+      path:'/showall',
       component:select
     },
     {
@@ -18,6 +19,10 @@ export default new Router({
     {
       path:'/operate',
       component:operatable
+    },
+    {
+      path:'/data',
+      component:deldata
     }
   ]
 })
