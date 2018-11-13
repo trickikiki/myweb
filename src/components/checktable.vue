@@ -29,25 +29,25 @@
           pageSize:10
         }
       },
-      // mounted:function () {
-      //   this.axios.post('/getcols',{
-      //     tablename:this.tn
-      //   }).then((res)=>{
-      //     this.cols=res.data;
-      //   }).catch((err)=>{
-      //     console.log(err);
-      //   })
-      //   this.axios.post('/selectall',{
-      //     tablename:this.tn,
-      //     position:0,
-      //     offset:5
-      //   }).then((res)=>{
-      //     this.tableData=res.data;
-      //   }).catch((err)=>{
-      //     console.log(err);
-      //   })
-      //   this.getcount()
-      // },
+      created:function () {
+        this.axios.post('/getcols',{
+          tablename:this.tn
+        }).then((res)=>{
+          this.cols=res.data;
+        }).catch((err)=>{
+          console.log(err);
+        })
+        this.axios.post('/selectall',{
+          tablename:this.tn,
+          position:0,
+          offset:5
+        }).then((res)=>{
+          this.tableData=res.data;
+        }).catch((err)=>{
+          console.log(err);
+        })
+        this.getcount()
+      },
       watch:{
         tn:function () {
           this.axios.post('/getcols',{
