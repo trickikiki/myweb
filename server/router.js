@@ -5,7 +5,11 @@ var dbconfig = require(path.join(__dirname,'dbconfig.js'));
 var router = express.Router();
 var pool = mysql.createPool(dbconfig)
 
-router.post('/addtable',function (req,res,next) {
+router.get(/.*/,function (req,res,next) {
+  console.log(req.path);
+  next();
+})
+router.post('/addtable',function (req,res) {
   let sql1='create table';
   let sql3= ')engine=InnoDB default charset=utf8';
       let sql = sql1+' '+req.body.tablename+'(';
@@ -339,6 +343,59 @@ router.post('/salary',function (req,res) {
                 res.send('工资更新完毕')
               }
             })
+          })
+        })
+      })
+    })
+    connection.release();
+  })
+})
+router.post('/add',function (req,res) {
+  let sql='insert into ? ('
+  let cols=[]
+  pool.getConnection(function (err,connection) {
+    if(err)
+    {
+      throw err;
+      res.send("插入失败")
+      return;
+    }
+    connection.beginTransaction(function (err) {
+      if(err){throw err; return}
+      connection.query('desc ?',[req.body.tablename],function (err,result) {
+        if(err){
+          res.send("插入失败")
+          return connection.rollback(function () {
+          console.log(err)
+        })
+        }
+        let i=0
+        for(i;i<result.length-1;i++)
+        {
+          sql=sql+result[i].Field+','
+        }
+        sql=sql+result[i].Field+')values('
+        i=0
+        for(i;i<req.body.values.length-1;i++)
+        {
+          sql=sql+req.body.values[i]+','
+        }
+        sql=sql+req.body.values[i]+')'
+        connection.query(sql,function (err,result) {
+          if(err){
+            res.send("插入失败")
+            return connection.rollback(function () {
+              console.log(err)
+            })
+          }
+          connection.commit(function (err) {
+            if(err){
+              res.send("插入失败")
+              return connection.rollback(function () {
+                console.log(err)
+              })
+            }
+            res.send("插入成功")
           })
         })
       })

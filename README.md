@@ -206,3 +206,21 @@
 >   "status":503,<br>
 >   "data":'无法删除'<br>
 >{<br>
+
+## 10在指定表中插入数据<br>
+- API地址：/add<br>
+- 请求方式 post<br>
+- 必要参数：tablename:string,values:[string]<br>
+- 请求返回值：<br>
+* 请求成功:<br>
+
+>{<br>
+>   "data":"插入成功",<br>
+>}<br>
+
+* 请求失败:<br>
+
+>{<br>
+>   "status":503,<br>
+>   "data":'无法删除'<br>
+>{<br>
