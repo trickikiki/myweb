@@ -36,7 +36,7 @@ export default {
         }
     },
     computed: {
-      fromindex: function(){ return (this.from-1)*this.offset+1 }
+      fromindex: function(){ return this.from*this.offset+1 }
     },
     methods:{
       handleSizeChange(val){
@@ -51,7 +51,7 @@ export default {
             this.axios.post('/selectall',{
             tablename:this.formname,
             position:this.fromindex,
-            offset:this.offset
+            offset:this.offset,
           }).then((res)=>{
             this.staffs=res.data
             this.total=res.data.num
