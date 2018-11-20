@@ -16,9 +16,12 @@
   import conbutton from './components/conbutton'
   import mymenu from './components/mymenu'
   import find from './components/find'
+  import helloworld from './components/helloworld'
+  import login from './components/login'
+
 export default {
   name: 'App',
-  components:{sel,conbutton,mymenu,find}
+  components:{login,sel,conbutton,mymenu,find}
 }
 </script>
 

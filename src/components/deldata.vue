@@ -10,10 +10,10 @@
           </el-select>
         </el-col>
         <el-col :span="16">
-          <el-input v-model="num" placeholder="输入要删除的员工编号"></el-input>
+          <el-input v-model="num" placeholder="请输入要删除的员工编号"></el-input>
         </el-col>
         <el-col :span="1">
-          <el-button type="danger" icon="el-icon-delete" circle @click="deldata"></el-button>
+          <el-button type="danger" icon="el-icon-delete" circle @click="deldata" ></el-button>
         </el-col>
       </el-row>
       <el-row>
@@ -21,13 +21,13 @@
           <el-tag type="info">更新员工下一年的工资</el-tag>
         </el-col>
         <el-col :span="4">
-          <el-input v-model="emp_no" placeholder="员工编号"></el-input>
+          <el-input v-model="emp_no" placeholder="请输入员工编号" style="width:83%"></el-input>
         </el-col>
         <el-col :span="4">
-          <el-input v-model="salary" placeholder="新一年的薪水"></el-input>
+          <el-input v-model="salary" placeholder="请输入新一年的薪水" style="width:400%"></el-input>
         </el-col>
         <el-col :span="1">
-          <el-button type="primary" icon="el-icon-edit" circle @click="alter"></el-button>
+          <el-button type="primary" icon="el-icon-edit" circle @click="alter" style="margin:0 1200%" ></el-button>
         </el-col>
       </el-row>
     </div>

@@ -13,15 +13,15 @@
     </el-row>
     <el-row>
       <el-col>
-        <el-pagination
-          :total=total
-          background
-          @current-change="handleCurrentChange"
-          @prev-click="handleCurrentChange"
-          @next-click="handleCurrentChange"
-          :page-size=pageSize
-        >
-        </el-pagination>
+    <el-pagination
+        @size-change="handleSizeChange"
+        layout="total, sizes, prev, pager, next, jumper"
+        @current-change="handlePageChange"
+        :current-page="from"
+        :page-size="offset"
+        :total="total"
+      >
+    </el-pagination> 
       </el-col>
     </el-row>
   </div>
@@ -38,13 +38,25 @@
             ft:true,
             pageSize:10,
             total:0,
+            from: 0
           }
       },
+      computed: {
+      fromindex: function(){ return (this.from-1)*this.offset+1 }
+      },
       methods:{
+        handleSizeChange(val){
+          this.pageSize=val
+          this.check()
+        },
+        handlePageChange(val){
+          this.from=val
+          this.check()
+        },
         check:function(){
           this.axios.post('/checkempno',{
             emp_no:this.emp_no,
-            position:0,
+            position:this.fromindex,
             offset:this.pageSize
           }).then((res)=>{
             this.tableData=res.data.table
@@ -53,18 +65,18 @@
             console.log(err)
           })
         },
-        handleCurrentChange:function (val) {
-          this.axios.post('/checkempno',{
-            emp_no:this.emp_no,
-            position:(val-1)*this.pageSize,
-            offset:this.pageSize
-          }).then((res)=>{
-            this.tableData=res.data.table
-            this.total=res.data.num
-          }).catch((err)=>{
-            console.log(err)
-          })
-        }
+        // handleCurrentChange:function (val) {
+        //   this.axios.post('/checkempno',{
+        //     emp_no:this.emp_no,
+        //     position:(val-1)*this.pageSize,
+        //     offset:this.pageSize
+        //   }).then((res)=>{
+        //     this.tableData=res.data.table
+        //     this.total=res.data.num
+        //   }).catch((err)=>{
+        //     console.log(err)
+        //   })
+        // }
       }
     }
 </script>
