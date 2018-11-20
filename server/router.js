@@ -117,12 +117,14 @@ router.post('/selectall',function (req,res) {
     if(err){
       res.status(503)
       res.send('无法取得数据')
+      console.log(err)
       return;
     }
     connection.query('select * from ?? limit ?,?',[req.body.tablename,req.body.position,req.body.offset],function (err,result) {
       if(err){
         res.status(503)
         res.send('无法取得数据')
+        console.log(err)
         return;
       }
       for(let i of result){
