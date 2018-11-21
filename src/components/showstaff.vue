@@ -42,7 +42,7 @@ export default {
     name:'showstaff',
     data(){
         return{
-            from:0,
+            from:1,
             offset:10,
             formname:'',
             staffs:[],
@@ -51,7 +51,7 @@ export default {
         }
     },
     computed: {
-      fromindex: function(){ return this.from*this.offset+1 }
+      fromindex: function(){ return (this.from-1)*this.offset }
     },
     filters: {
       datefrm: function(el) {

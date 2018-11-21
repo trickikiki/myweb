@@ -7,7 +7,7 @@ var app = express();
 var router=require(path.join(__dirname,'server/router'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/',router);
 
 app.listen(8888,function () {

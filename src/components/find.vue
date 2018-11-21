@@ -11,7 +11,7 @@
                 <el-table-column label="Lastname" prop="last_name" sortable></el-table-column>
                 <el-table-column label="Title" prop="title" sortable></el-table-column>
                 <el-table-column label="Salary" prop="salary" sortable></el-table-column>
-                <el-table-column label="From_Date" sortable>        
+                <el-table-column label="From_Date" sortable>
                 <template slot-scope="props">
                 {{props.row.from_date | datefrm }}
                 </template>
@@ -35,7 +35,7 @@
         :page-size="pageSize"
         :total="total"
       >
-    </el-pagination> 
+    </el-pagination>
       </el-col>
     </el-row>
   </div>
@@ -53,11 +53,11 @@
             ft:true,
             pageSize:10,
             total:0,
-            from: 0
+            from: 1
           }
       },
       computed: {
-      fromindex: function(){ return this.from*this.offset+1 }
+      fromindex: function(){ return (this.from-1)*this.pageSize }
       },
       filters: {
         datefrm: function(el) {
