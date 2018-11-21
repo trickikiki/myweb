@@ -40,7 +40,7 @@
         this.axios.post('/selectall',{
           tablename:this.tn,
           position:0,
-          offset:5
+          offset:10
         }).then((res)=>{
           this.tableData=res.data;
         }).catch((err)=>{

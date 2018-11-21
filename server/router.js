@@ -402,18 +402,59 @@ router.post('/add',function (req,res) {
   })
 })
 router.post('/selectdept',function (req,res) {
-  sql=''
-  pool.getConnection(function (err,connect) {
+  let D={
+    data:[],
+    num:0
+  }
+  var selectdept='select employees.hire_date,employees.birth_date,employees.emp_no,employees.first_name,employees.last_name,employees.gender '+
+    'FROM employees,departments,dept_emp '+
+    'where employees.emp_no = dept_emp.emp_no and dept_emp.to_date= \'9999-01-01\' '+
+    'and dept_emp.dept_no = departments.dept_no and departments.dept_name=? limit ?,?'
+  var deptcount='select count(*) as num '+
+    'FROM employees,departments,dept_emp '+
+    'where employees.emp_no = dept_emp.emp_no and dept_emp.to_date= \'9999-01-01\' '+
+    'and dept_emp.dept_no = departments.dept_no and departments.dept_name=?'
+  pool.getConnection(function (err,connection) {
     if(err)
     {
       console.log(err)
       res.send("查询失败")
       return
     }
-    connect.beginTransaction(function (err) {
+    connection.beginTransaction(function (err) {
       if(err){throw err; return}
-      connect.query()
+      connection.query(selectdept,[req.body.tablename,req.body.position,req.body.offset],function (err,result) {
+        if(err){
+          res.send("查询失败")
+          return connection.rollback(function () {
+            console.log(err)
+          })
+        }
+        for(let i of result)
+        {
+          D.data.push(i)
+        }
+        connection.query(deptcount,[req.body.tablename],function (err,result) {
+          if(err){
+            res.send("查询失败")
+            return connection.rollback(function () {
+              console.log(err)
+            })
+          }
+          D.num=result[0].num
+          connection.commit(function (err) {
+            if(err){
+              res.send("查询失败")
+              return connection.rollback(function () {
+                console.log(err)
+              })
+            }
+            res.send(D)
+          })
+        })
+      })
     })
+    connection.release();
   })
 })
 module.exports = router;

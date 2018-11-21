@@ -7,6 +7,12 @@
             <span slot="title">首页</span>
           </template>
         </el-menu-item>
+        <el-menu-item index="/showall">
+          <template>
+            <i class="el-icon-menu"></i>
+            <span slot="title">所有信息</span>
+          </template>
+        </el-menu-item>
         <el-menu-item style="background-color:#D0D0D0;">
         <b>部门操作</b>
         </el-menu-item>
@@ -25,12 +31,7 @@
         <el-menu-item style="background-color:#D0D0D0;">
         <b>员工操作</b>
         </el-menu-item>
-        <el-menu-item index="/showall">
-          <template>
-            <i class="el-icon-menu"></i>
-            <span slot="title">所有员工</span>
-          </template>
-        </el-menu-item>
+
         <el-menu-item index="/find">
           <template>
             <i class="el-icon-menu"></i>

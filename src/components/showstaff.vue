@@ -3,14 +3,14 @@
         <el-input placeholder="请输入部门名称" v-model= formname style="width:20%"></el-input>
         <el-button icon="el-icon-search" @click=handlesearch>查询</el-button>
         <div>
-            <el-table       
+            <el-table
             :data="staffs"
             v-loading="listLoading"
             element-loading-text="给我一点时间"
             :items="staffs"
             style="margin:25px 0">
                 <el-table-column label="Id" prop="emp_no" sortable></el-table-column>
-                <el-table-column label="Brithday" sortable>        
+                <el-table-column label="Brithday" sortable>
                 <template slot-scope="props">
                 {{props.row.birth_date | datefrm }}
                 </template>
@@ -33,7 +33,7 @@
         :page-size="offset"
         :total="total"
       >
-    </el-pagination> 
+    </el-pagination>
     </div>
 </template>
 <script>
@@ -69,21 +69,21 @@ export default {
       },
     handlesearch(){
             this.listLoading=true
-            this.$axios.post('/selectall',{
+            this.axios.post('/selectdept',{
             tablename:this.formname,
             position:this.fromindex,
             offset:this.offset,
           }).then((res)=>{
-            this.staffs=res.data
+            this.staffs=res.data.data
             this.total=res.data.num
           }).catch((err)=>{
             console.log(err)
           })
           this.listLoading=false
         },
-        
+
     }
-    
+
 }
 </script>
 
