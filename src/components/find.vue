@@ -21,7 +21,7 @@
         :page-size="offset"
         :total="total"
       >
-    </el-pagination> 
+    </el-pagination>
       </el-col>
     </el-row>
   </div>
@@ -42,7 +42,7 @@
           }
       },
       computed: {
-      fromindex: function(){ return (this.from-1)*this.offset+1 }
+      fromindex: function(){ return this.from*this.pageSize+1 }
       },
       methods:{
         handleSizeChange(val){

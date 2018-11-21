@@ -5,10 +5,6 @@ var dbconfig = require(path.join(__dirname,'dbconfig.js'));
 var router = express.Router();
 var pool = mysql.createPool(dbconfig)
 
-router.get(/.*/,function (req,res,next) {
-  console.log(req.path);
-  next();
-})
 router.post('/addtable',function (req,res) {
   let sql1='create table';
   let sql3= ')engine=InnoDB default charset=utf8';
@@ -403,6 +399,21 @@ router.post('/add',function (req,res) {
       })
     })
     connection.release();
+  })
+})
+router.post('/selectdept',function (req,res) {
+  sql=''
+  pool.getConnection(function (err,connect) {
+    if(err)
+    {
+      console.log(err)
+      res.send("查询失败")
+      return
+    }
+    connect.beginTransaction(function (err) {
+      if(err){throw err; return}
+      connect.query()
+    })
   })
 })
 module.exports = router;
