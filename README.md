@@ -1,5 +1,10 @@
 # studsys<br>
 
+>vue-element-express-mysql
+>数据库选用mysql example databases作为测试数据库
+
+
+
 ## 1.新建一个表<br>
 - API地址：/addtable <br>
 - 请求方式post<br>
