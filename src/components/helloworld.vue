@@ -8,7 +8,6 @@
 </template>
 <style>
 .el-main{
-background-image: url(../../assets/timg.jpg);
 background-size: 40% 30%;
 background-repeat: no-repeat;
 background-position:bottom;

@@ -457,4 +457,17 @@ router.post('/selectdept',function (req,res) {
     connection.release();
   })
 })
+
+router.post('/login',function(req,res){
+  if(req.body.username=='admin'&&req.body.password=='admin')
+  {
+    res.session.token='admin';
+    res.send({token:'admin'});
+  }
+  else
+  {
+    res.send({token:'none',msg:'fail'});
+  }
+})
+
 module.exports = router;

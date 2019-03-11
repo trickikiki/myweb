@@ -55,8 +55,33 @@ export default {
         };
         
     },
+    created() {
+        localStorage.login='none'
+    },
     methods:{
       login(){
+          this.axios.post('/login',{
+              username:this.user,
+              password:this.pass
+          }).then((res) => {
+              if(res.data.token=='none')
+              {
+                  this.user='';
+                  this.pass='';
+                  this.$message.error('账号密码错误');
+                  localStorage.login='none'
+              }
+              else if(res.data.token=='admin')
+              {
+                  this.$store.commit('setTOKEN',res.data.token);
+                  this.$store.commit('setUsername','admin');
+                  localStorage.login='admin';
+                  localStorage.username='admin';
+                  this.$router.push({path:'/helloworld'})
+              }
+          }).catch((err) => {
+              this.$message.error('发生未知错误');
+          });
           if(this.user === 'admin' && this.pass === 'admin')
           {
           this.$router.push({path:'/helloworld'})

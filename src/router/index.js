@@ -15,7 +15,7 @@ Vue.use(Router)
 
 const login = resolve => require(['@/components/login'], resolve)
 
-export default new Router({
+const router = new Router({
   routes: [
       {
         path: '/',
@@ -24,27 +24,59 @@ export default new Router({
       },
     {
       path:'/helloworld',
-      component:helloworld
+      component:helloworld,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/showstaff',
-      component:showstaff
+      component:showstaff,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/showall',
-      component:select
+      component:select,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/find',
-      component:find
+      component:find,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/operate',
-      component:operatable
+      component:operatable,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/data',
-      component:deldata
+      component:deldata,
+      meta:{
+        requireAuth:true
+      }
     }
   ]
 })
+
+router.beforeEach((to,from,next)=>{
+  if(to.meta.requireAuth){
+    if(localStorage.login=='none'){
+      next('/');
+    }else{
+      next();
+    }
+  }
+  else{
+    next();
+  }
+})
+export default router;
