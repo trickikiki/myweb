@@ -18,7 +18,7 @@
 <script>
     export default {
       name: "checktable",
-      props:['tn'],
+      props:['tn','tnname'],
       data() {
         return {
           ft:true,
@@ -30,6 +30,10 @@
         }
       },
       created:function () {
+        if(this.tn!=this.tnname)
+        {
+          return
+        }
         this.axios.post('/getcols',{
           tablename:this.tn
         }).then((res)=>{
@@ -50,6 +54,10 @@
       },
       watch:{
         tn:function () {
+          if(this.tn!=this.tnname)
+          {
+            return
+          }
           this.axios.post('/getcols',{
             tablename:this.tn
           }).then((res)=>{
@@ -77,7 +85,6 @@
             offset:this.pageSize
           }).then((res)=>{
             this.tableData=res.data;
-            console.log('a');
           }).catch((err)=>{
             console.log(err);
           })
@@ -87,7 +94,6 @@
             tablename:this.tn
           }).then((res)=>{
             this.total=parseInt(res.data);
-            console.log(res.data);
           }).catch((err)=>{
             console.log(err);
           })

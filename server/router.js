@@ -108,6 +108,7 @@ router.post('/getcols',function (req,res) {
   })
 })//输入表名返回列名字符串数组{tablename:string}
 router.post('/selectall',function (req,res) {
+  console.time('selectall')
   let dataarr=[];
   pool.getConnection(function (err,connection) {
     if(err){
@@ -131,6 +132,7 @@ router.post('/selectall',function (req,res) {
     })
     connection.release();
   })
+  console.timeEnd('selectall')
 })//输入表名和起始select位置以及select个数返回对象数组{tablename:string,position:num,offset:num}
 router.post('/getcount',function (req,res) {
   let dataarr=0;
@@ -461,7 +463,7 @@ router.post('/selectdept',function (req,res) {
 router.post('/login',function(req,res){
   if(req.body.username=='admin'&&req.body.password=='admin')
   {
-    res.session.token='admin';
+    //res.session.token='admin';
     res.send({token:'admin'});
   }
   else

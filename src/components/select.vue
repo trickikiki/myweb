@@ -2,7 +2,7 @@
   <div>
     <el-tabs v-model="editableTabsValue2" type="border-card"  :stretch=stretch>
       <el-tab-pane v-for='(item,index) in editableTabs2' :key=index :label=item :name=item>
-        <checktable :tn="editableTabsValue2"></checktable>
+        <checktable :tn="editableTabsValue2" :tnname="item"></checktable>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -27,6 +27,7 @@
         }).catch((err)=>{
           console.log(err);
         })
+
       },
       methods: {
 

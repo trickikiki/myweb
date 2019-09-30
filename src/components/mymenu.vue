@@ -13,7 +13,7 @@
             <span slot="title">所有信息</span>
           </template>
         </el-menu-item>
-        <el-menu-item style="background-color:#D0D0D0;">
+        <el-menu-item style="background-color:#D0D0D0;" index="/showstaff">
         <b>部门操作</b>
         </el-menu-item>
         <el-menu-item index="/showstaff">
@@ -28,7 +28,7 @@
             <span slot="title">增删部门表</span>
           </template>
         </el-menu-item>
-        <el-menu-item style="background-color:#D0D0D0;">
+        <el-menu-item style="background-color:#D0D0D0;" index="/find">
         <b>员工操作</b>
         </el-menu-item>
 
